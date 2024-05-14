@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ln -sf ../zsh/.zshrc $HOME/.zshrc 
+ln -sf ${PWD}/zsh/.zshrc $HOME/.zshrc 

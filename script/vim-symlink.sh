@@ -1,6 +1,6 @@
 #!/bin/sh
-ln -sf ../vim/.vim $HOME/.vim &&
-ln -sf ../vim/.viminfo $HOME/.viminfo &&
-ln -sf ../vim/.vimrc $HOME/.vimrc &&
-ln -sf ../vim/.vimrc.plug $HOME/.vimrc.plug
+ln -sf ${PWD}/vim/.vim $HOME/.vim &&
+ln -sf ${PWD}/vim/.viminfo $HOME/.viminfo &&
+ln -sf ${PWD}/vim/.vimrc $HOME/.vimrc &&
+ln -sf ${PWD}/vim/.vimrc.plug $HOME/.vimrc.plug
 
