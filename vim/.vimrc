@@ -20,7 +20,10 @@ set autoindent
 set laststatus=2
 
 " Set colour scheme
-colorscheme darkblue
+colorscheme evening
+
+" Enable syntax highlighting
+syntax enable
 
 " Enable mouse
 set mouse=a

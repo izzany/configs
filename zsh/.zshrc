@@ -112,3 +112,5 @@ export NVM_DIR="$HOME/.nvm"
 export SCREENDIR=$HOME/.screen
 #
 eval $(thefuck --alias)
+export GOPATH=$HOME/go
+export XAUTHORITY="$HOME/.Xauthority"
