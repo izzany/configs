@@ -1,6 +1,8 @@
 #!/bin/sh
-ln -sf ${PWD%/*}/vim/.vim $HOME/.vim &&
-ln -sf ${PWD%/*}/vim/.viminfo $HOME/.viminfo &&
-ln -sf ${PWD%/*}/vim/.vimrc $HOME/.vimrc &&
-ln -sf ${PWD%/*}/vim/.vimrc.plug $HOME/.vimrc.plug
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." ; pwd -P )
+
+ln -sf $parent_path/vim/.vim $HOME/.vim &&
+ln -sf $parent_path/vim/.viminfo $HOME/.viminfo &&
+ln -sf $parent_path/vim/.vimrc $HOME/.vimrc &&
+ln -sf $parent_path/vim/.vimrc.plug $HOME/.vimrc.plug
 
