@@ -1,2 +1,2 @@
 require("izzanyhehe.remap")
-print('izzanyhihi')
+require("izzanyhehe.set")
