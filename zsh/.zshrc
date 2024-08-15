@@ -101,7 +101,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias tree="tree -I 'node_modules'"
 alias bat="batcat"
-
+alias vim="nvim"
 # Custom exports
 # nvm
 export NVM_DIR="$HOME/.nvm"
