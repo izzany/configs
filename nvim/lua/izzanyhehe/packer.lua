@@ -1,4 +1,7 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- This is going to get me cancelled
+vim.keymap.set("i", "<C-c>", "<Esc>")
+
 
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
@@ -13,8 +16,8 @@ return require('packer').startup(function(use)
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
 
-  use({ 
-	  'kepano/flexoki-neovim', 
+  use({
+	  'kepano/flexoki-neovim',
 	  as = 'flexoki',
 	  config = function()
 		  vim.cmd('colorscheme flexoki-dark')
