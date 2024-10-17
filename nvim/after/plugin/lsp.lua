@@ -59,7 +59,6 @@ end)
 lsp.preset("recommended")
 
 lsp.ensure_installed({
-  "tsserver",
   "lua_ls",
   "rust_analyzer",
 })
@@ -70,6 +69,18 @@ lsp.configure("lua_ls", {
         Lua = {
             diagnostics = {
                 globals = { "vim" }
+            }
+        }
+    }
+})
+
+lsp.configure("pylsp", {
+    settings = {
+        pylsp = {
+            pycodestyle = {
+                enabled = false,
+                ignore = { 'E501' },
+                maxLineLength = -1,
             }
         }
     }
