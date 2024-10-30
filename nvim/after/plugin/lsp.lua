@@ -78,7 +78,6 @@ lsp.configure("pylsp", {
     settings = {
         pylsp = {
             pycodestyle = {
-                enabled = false,
                 ignore = { 'E501' },
                 maxLineLength = -1,
             }
