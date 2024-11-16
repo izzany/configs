@@ -97,21 +97,13 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
 alias tree="tree -I 'node_modules'"
 alias bat="batcat"
 alias vim="nvim"
+alias pn="pnpm"
 # Custom exports
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 #
-# screen
-export SCREENDIR=$HOME/.screen
-#
-eval $(thefuck --alias)
 export GOPATH=$HOME/go
-export XAUTHORITY="$HOME/.Xauthority"
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
