@@ -1,8 +1,8 @@
 nvim-symlink:
-	./script/nvim-symlink.sh
+	./script/symlink/nvim.sh
 zsh-symlink:
-	./script/zsh-symlink.sh
+	./script/symlink/zsh.sh
 sway-symlink:
-	./script/sway-symlink.sh
+	./script/symlink/sway.sh
 tmux-symlink:
-	./script/tmux-symlink.sh
+	./script/symlink/tmux.sh
