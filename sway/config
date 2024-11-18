@@ -226,7 +226,11 @@ bindsym $mod+r mode "resize"
 # For example, to disable the default bar from Fedora configs, you'll need to
 exec echo -n > "$HOME/.config/sway/config.d/90-bar.conf"
 exec waybar
+exec mako
 #
+# run startup scripts here
+exec "$HOME/personal/configs/scripts/tmux/create-session.sh"
+
 # Note the quoting, the $() and the arguments quoting. All the parts are equally
 # important to make the magic work. And if you want to learn the secret behind
 # the trick, it's all in the `wordexp(3)`.
@@ -234,34 +238,36 @@ exec waybar
 default_border none
 
 workspace 1 output HDMI-A-1
+workspace 2 output DVI-D-1
+workspace 3 output DVI-D-1
+workspace 4 output HDMI-A-1
+workspace 5 output HDMI-A-1
+workspace 6 output DVI-D-1
+# workspace 7 output HDMI-A-1
+workspace 8 output HDMI-A-1
+workspace 9 output DVI-D-1
+
 workspace 1
 exec firefox
 
-workspace 2 output DVI-D-1
 workspace 2
 exec thunderbird
- 
-workspace 3 output DVI-D-1
+
 workspace 3
 exec google-chrome-unstable
 
-workspace 4 output HDMI-A-1
 workspace 4
-exec $term
+exec $term tmux a -t main:term
 
-workspace 5 output HDMI-A-1
 workspace 5
-exec zulip
+exec flatpak run org.zulip.Zulip
 
-# workspace 6 output DVI-D-1
+workspace 6
+exec $term tmux a -t info:calcurse
 
-# workspace 7 output HDMI-A-1
-
-workspace 8 output HDMI-A-1
 workspace 8
-exec ncspot
+exec flatpak run io.github.hrkfdn.ncspot
 
-workspace 9 output DVI-D-1
 workspace 9
 exec bitwarden
 

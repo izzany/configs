@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # create sessions
+tmux new-session -d -s main: -n term
 tmux new-session -d -s info: -n term
 
 #create windows
