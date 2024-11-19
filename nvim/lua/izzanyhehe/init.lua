@@ -6,11 +6,44 @@ local augroup = vim.api.nvim_create_augroup
 local Handsome = augroup('izzany', {})
 
 local autocmd = vim.api.nvim_create_autocmd
+local yank_group = augroup('HighlightYank', {})
 
-autocmd({"BufWritePre"}, {
+function R(name)
+    require("plenary.reload").reload_module(name)
+end
+
+vim.filetype.add({
+    extension = {
+        templ = 'templ',
+    }
+})
+
+autocmd('TextYankPost', {
+    group = yank_group,
+    pattern = '*',
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = 'IncSearch',
+            timeout = 40,
+        })
+    end,
+})
+
+autocmd({ "BufWritePre" }, {
     group = Handsome,
     pattern = "*",
     command = [[%s/\s\+$//e]],
+})
+
+autocmd('BufEnter', {
+    group = Handsome,
+    callback = function()
+        if vim.bo.filetype == "zig" then
+            vim.cmd.colorscheme("tokyonight-night")
+        else
+            vim.cmd.colorscheme("flexoki-dark")
+        end
+    end
 })
 
 autocmd('LspAttach', {
@@ -31,11 +64,11 @@ autocmd('LspAttach', {
 })
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = {
-    { import = "plugins" },
-  },
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "flexoki-dark" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+    spec = {
+        { import = "plugins" },
+    },
+    -- colorscheme that will be used when installing plugins.
+    install = { colorscheme = { "flexoki-dark" } },
+    -- automatically check for plugin updates
+    checker = { enabled = true },
 })
