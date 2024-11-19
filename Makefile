@@ -6,3 +6,5 @@ sway-symlink:
 	./script/symlink/sway.sh
 tmux-symlink:
 	./script/symlink/tmux.sh
+script-symlink:
+	./script/symlink/script.sh

@@ -229,7 +229,7 @@ exec waybar
 exec mako
 #
 # run startup scripts here
-exec "$HOME/personal/configs/scripts/tmux/create-session.sh"
+exec "sh /opt/script/tmux/create-session.sh"
 
 # Note the quoting, the $() and the arguments quoting. All the parts are equally
 # important to make the magic work. And if you want to learn the secret behind
@@ -237,39 +237,52 @@ exec "$HOME/personal/configs/scripts/tmux/create-session.sh"
 #
 default_border none
 
-workspace 1 output HDMI-A-1
-workspace 2 output DVI-D-1
-workspace 3 output DVI-D-1
-workspace 4 output HDMI-A-1
-workspace 5 output HDMI-A-1
-workspace 6 output DVI-D-1
-# workspace 7 output HDMI-A-1
-workspace 8 output HDMI-A-1
-workspace 9 output DVI-D-1
+set $ws1 "1:Browser Main"
+set $ws2 "2:Email"
+set $ws3 "3:Browser Secondary"
+set $ws4 "4:Terminal Main"
+set $ws5 "5:Chat"
+set $ws6 "6:Terminal Info"
+set $ws7 "7:Random"
+set $ws8 "8:Music"
+set $ws9 "9:Bitwarden"
 
-workspace 1
-exec firefox
+set $do1 "HDMI-A-1"
+set $do2 "DVI-D-1"
 
-workspace 2
-exec thunderbird
+workspace $ws1 output $do1
+workspace $ws2 output $do2
+workspace $ws3 output $do2
+workspace $ws4 output $do1
+workspace $ws5 output $do1
+workspace $ws6 output $do2
+# workspace $ws7 output $do1
+# workspace $ws8 output $do1
+workspace $ws9 output $do2
 
-workspace 3
-exec google-chrome-unstable
+assign [app_id="io.github.zen_browser.zen"] $ws1
+assign [app_id="thunderbird"] $ws2
+assign [app_id="firefox"] $ws3
+assign [app_id="google-chrome-unstable"] $ws3
+assign [app_id="org.zulip.Zulip"] $ws5
+assign [app_id="com.slack.Slack"] $ws5
+assign [app_id="bitwarden"] $ws9
 
-workspace 4
-exec $term tmux a -t main:term
+exec swaymsg "workspace $ws1; exec flatpak run io.github.zen_browser.zen"
 
-workspace 5
-exec flatpak run org.zulip.Zulip
+exec swaymsg "workspace $ws2; exec thunderbird"
 
-workspace 6
-exec $term tmux a -t info:calcurse
+exec swaymsg "workspace $ws3; exec firefox"
+exec swaymsg "workspace $ws3; exec google-chrome-unstable"
 
-workspace 8
-exec flatpak run io.github.hrkfdn.ncspot
+exec swaymsg "workspace $ws4; exec $term tmux a -t main:term"
 
-workspace 9
-exec bitwarden
+exec swaymsg "workspace $ws5; exec flatpak run org.zulip.Zulip"
+exec swaymsg "workspace $ws5; exec flatpak run com.slack.Slack"
+
+exec swaymsg "workspace $ws6; exec $term tmux a -t info:calcurse"
+
+exec swaymsg "workspace $ws9; exec bitwarden"
 
 include /etc/sway/config.d/
 #include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
