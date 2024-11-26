@@ -106,7 +106,12 @@ alias tree="tree -I 'node_modules'"
 alias bat="batcat"
 alias vim="nvim"
 alias pn="pnpm"
+alias tssh="tsh ssh"
 # Custom exports
 #
 export GOPATH=$HOME/go
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+. "/home/izzany/.deno/env"
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
