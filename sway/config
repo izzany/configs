@@ -25,17 +25,24 @@ set $rofi_cmd rofi \
 # Shows a combined list of the applications with desktop files and
 # executables from PATH.
 # TODO: add window with the next release of rofi-wayland
-set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
+# set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
+# set $menu $rofi_cmd -show combi -combi-modes "window,drun,run,ssh" -modes combi
+
+# rofi is fucking broken
+# set $menu wmenu-run
+set $menu fuzzel
 
 ### Output configuration
 #
+set $do1 "HDMI-A-1"
+set $do2 "DVI-D-1"
+
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # Requires: desktop-backgrounds-compat, swaybg
-output * bg /usr/share/backgrounds/default.png fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+output * bg /usr/share/backgrounds/default-dark.png fill
+
+output $do1 resolution 1920x1080 position 0,0
+output $do2 resolution 1600x900 position 1920,180
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
@@ -81,6 +88,14 @@ output * bg /usr/share/backgrounds/default.png fill
 
     # Lock screen
     bindsym $mod+l exec swaylock
+
+    # screenshot to clipboard
+    bindsym $mod+p exec grim -g "$(slurp)" - | wl-copy
+    # screenshot to file
+    bindsym $mod+Shift+p exec grim -g "$(slurp)" $(xdg-user-dir PICTURES)/grim/$(date +'%FT%T.png')
+
+    # Toggle workspaces
+    bindsym $mod+t workspace back_and_forth
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -159,7 +174,7 @@ output * bg /usr/share/backgrounds/default.png fill
     # Switch the current container between different layout styles
     bindsym $mod+s layout stacking
     bindsym $mod+w layout tabbed
-    bindsym $mod+t layout toggle split
+    bindsym $mod+x layout toggle split
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen
@@ -184,6 +199,12 @@ output * bg /usr/share/backgrounds/default.png fill
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
+
+#
+# Cursors / Mouse
+#
+    # Hide cursor after x millisecond
+    seat seat0 hide_cursor 3000
 #
 # Resizing containers:
 #
@@ -229,7 +250,7 @@ exec waybar
 exec mako
 #
 # run startup scripts here
-exec "sh /opt/script/tmux/create-session.sh"
+exec "sh /opt/script/tmux/create-session.work.sh"
 
 # Note the quoting, the $() and the arguments quoting. All the parts are equally
 # important to make the magic work. And if you want to learn the secret behind
@@ -237,18 +258,24 @@ exec "sh /opt/script/tmux/create-session.sh"
 #
 default_border none
 
-set $ws1 "1:Browser Main"
+set $ws1 "1:Browser1"
+# set $ws1 workspace_layout tabbed
 set $ws2 "2:Email"
-set $ws3 "3:Browser Secondary"
-set $ws4 "4:Terminal Main"
-set $ws5 "5:Chat"
-set $ws6 "6:Terminal Info"
-set $ws7 "7:Random"
-set $ws8 "8:Music"
+# set $ws2 workspace_layout tabbed
+set $ws3 "3:Browser2"
+# set $ws3 workspace_layout tabbed
+set $ws4 "4:Term1"
+# set $ws4 workspace_layout tabbed
+set $ws5 "5:Comm"
+# set $ws5 workspace_layout tabbed
+set $ws6 "6:Term2"
+# set $ws6 workspace_layout tabbed
+set $ws7 "7:Random1"
+# set $ws7 workspace_layout tabbed
+set $ws8 "8:Random2"
+# set $ws8 workspace_layout tabbed
 set $ws9 "9:Bitwarden"
-
-set $do1 "HDMI-A-1"
-set $do2 "DVI-D-1"
+# set $ws9 workspace_layout tabbed
 
 workspace $ws1 output $do1
 workspace $ws2 output $do2
@@ -261,6 +288,7 @@ workspace $ws6 output $do2
 workspace $ws9 output $do2
 
 assign [app_id="io.github.zen_browser.zen"] $ws1
+assign [app_id="qutebrowser"] $ws1
 assign [app_id="thunderbird"] $ws2
 assign [app_id="firefox"] $ws3
 assign [app_id="google-chrome-unstable"] $ws3
@@ -269,6 +297,7 @@ assign [app_id="com.slack.Slack"] $ws5
 assign [app_id="bitwarden"] $ws9
 
 exec swaymsg "workspace $ws1; exec flatpak run io.github.zen_browser.zen"
+exec swaymsg "workspace $ws1; exec qutebrowser"
 
 exec swaymsg "workspace $ws2; exec thunderbird"
 
