@@ -32,14 +32,27 @@ set $rofi_cmd rofi \
 # set $menu wmenu-run
 set $menu fuzzel
 
-### Output configuration
-#
+# Define Monitor outputs
 set $do1 "HDMI-A-1"
 set $do2 "DVI-D-1"
 
+# Define Workspace Names
+set $ws1 "1:Browser1"
+set $ws2 "2:Email"
+set $ws3 "3:Browser2"
+set $ws4 "4:Term1"
+set $ws5 "5:Comm"
+set $ws6 "6:Term2"
+set $ws7 "7:Notes"
+set $ws8 "8:Random2"
+set $ws9 "9:Bitwarden"
+# Workspace 10 is implicitly "10" unless defined
+
+### Output configuration
+#
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # Requires: desktop-backgrounds-compat, swaybg
-output * bg /usr/share/backgrounds/default-dark.png fill
+output * bg /usr/share/backgrounds/default.jxl fill
 
 output $do1 resolution 1920x1080 position 0,0
 output $do2 resolution 1600x900 position 1920,180
@@ -78,7 +91,7 @@ output $do2 resolution 1600x900 position 1920,180
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+Return exec $term -e tmux
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -138,7 +151,7 @@ output $do2 resolution 1600x900 position 1920,180
 #
 # Workspaces:
 #
-    # Switch to workspace
+    # Switch to workspace using number keys
     bindsym $mod+1 workspace number 1
     bindsym $mod+2 workspace number 2
     bindsym $mod+3 workspace number 3
@@ -149,7 +162,12 @@ output $do2 resolution 1600x900 position 1920,180
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
-    # Move focused container to workspace
+    # Switch to workspace using named variables (redundant if numbers match, but explicit)
+    # bindsym $mod+1 workspace $ws1 # Can uncomment if you prefer referring by variable
+    # bindsym $mod+2 workspace $ws2
+    # ... etc ...
+
+    # Move focused container to workspace using number keys
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
     bindsym $mod+Shift+3 move container to workspace number 3
@@ -160,8 +178,13 @@ output $do2 resolution 1600x900 position 1920,180
     bindsym $mod+Shift+8 move container to workspace number 8
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
+    # Move focused container to workspace using named variables
+    # bindsym $mod+Shift+1 move container to workspace $ws1 # Can uncomment if you prefer
+    # bindsym $mod+Shift+2 move container to workspace $ws2
+    # ... etc ...
+
     # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
+    # We just use 1-10 as the default. Using named variables ($wsN) is good practice.
 #
 # Layout stuff:
 #
@@ -204,7 +227,7 @@ output $do2 resolution 1600x900 position 1920,180
 # Cursors / Mouse
 #
     # Hide cursor after x millisecond
-    seat seat0 hide_cursor 3000
+    #seat seat0 hide_cursor 3000
 #
 # Resizing containers:
 #
@@ -230,88 +253,80 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# Include configs from 3 locations:
-#  - /usr/share/sway/config.d
-#  - /etc/sway/config.d
-#  - $XDG_CONFIG_HOME/sway/config.d ($HOME/.config/sway/config.d)
-#
-# If multiple directories contain the files with the same name, the later
-# directory takes precedence; `$XDG_CONFIG_HOME/sway/config.d/20-swayidle.conf`
-# will always be loaded instead of `/usr/share/sway/config.d/20-swayidle.conf`
-# or `/etc/sway/config.d/20-swayidle.conf`
-#
-# This mechanism permits overriding our default configuration per-system
-# (/etc) or per-user ($XDG_CONFIG_HOME) basis. Just create the file you
-# want to modify/override in the higher-level directory.
-#
-# For example, to disable the default bar from Fedora configs, you'll need to
-exec echo -n > "$HOME/.config/sway/config.d/90-bar.conf"
-exec waybar
-exec mako
-#
-# run startup scripts here
-exec "sh /opt/script/tmux/create-session.work.sh"
-
-# Note the quoting, the $() and the arguments quoting. All the parts are equally
-# important to make the magic work. And if you want to learn the secret behind
-# the trick, it's all in the `wordexp(3)`.
-#
+### Appearance / Layout
 default_border none
+# Apply tabbed layout to new workspaces
+workspace_layout tabbed
 
-set $ws1 "1:Browser1"
-# set $ws1 workspace_layout tabbed
-set $ws2 "2:Email"
-# set $ws2 workspace_layout tabbed
-set $ws3 "3:Browser2"
-# set $ws3 workspace_layout tabbed
-set $ws4 "4:Term1"
-# set $ws4 workspace_layout tabbed
-set $ws5 "5:Comm"
-# set $ws5 workspace_layout tabbed
-set $ws6 "6:Term2"
-# set $ws6 workspace_layout tabbed
-set $ws7 "7:Random1"
-# set $ws7 workspace_layout tabbed
-set $ws8 "8:Random2"
-# set $ws8 workspace_layout tabbed
-set $ws9 "9:Bitwarden"
-# set $ws9 workspace_layout tabbed
-
+### Workspace Assignments to Outputs
+# Assign specific workspaces to specific monitor outputs
 workspace $ws1 output $do1
 workspace $ws2 output $do2
 workspace $ws3 output $do2
 workspace $ws4 output $do1
 workspace $ws5 output $do1
 workspace $ws6 output $do2
-# workspace $ws7 output $do1
-# workspace $ws8 output $do1
+workspace $ws7 output $do1
+workspace $ws8 output $do1
 workspace $ws9 output $do2
 
-assign [app_id="io.github.zen_browser.zen"] $ws1
-assign [app_id="qutebrowser"] $ws1
+### Application Assignments to Workspaces
+# Assign applications to specific workspaces using criteria like app_id or class
+# Verify these app_ids using: swaymsg -t get_tree | jq '.. | select(.focused?) | .app_id'
+assign [app_id="zen"] $ws1
 assign [app_id="thunderbird"] $ws2
 assign [app_id="firefox"] $ws3
-assign [app_id="google-chrome-unstable"] $ws3
-assign [app_id="org.zulip.Zulip"] $ws5
+# Check the actual app_id for Chrome; it might be 'google-chrome' or similar
+assign [app_id="Google-chrome-unstable"] $ws3
+assign [class="Zulip"] $ws5
 assign [app_id="com.slack.Slack"] $ws5
-assign [app_id="bitwarden"] $ws9
+# assign [app_id="xpad"] $ws7 # xpad might not have a stable app_id or class, test this
+# Verify app_id for Bitwarden (might be lowercase 'bitwarden', 'Bitwarden', or specific if Flatpak/Snap)
+assign [class="Bitwarden"] $ws9
 
-exec swaymsg "workspace $ws1; exec flatpak run io.github.zen_browser.zen"
-exec swaymsg "workspace $ws1; exec qutebrowser"
+# Assign specific terminal instances using unique app_ids (set via --app-id flag)
+assign [app_id="foot-main"] $ws4
+assign [app_id="foot-info"] $ws6
 
-exec swaymsg "workspace $ws2; exec thunderbird"
 
-exec swaymsg "workspace $ws3; exec firefox"
-exec swaymsg "workspace $ws3; exec google-chrome-unstable"
+### Startup Applications
+# Use simple `exec` and let the `assign` rules above handle placement.
 
-exec swaymsg "workspace $ws4; exec $term tmux a -t main:term"
+# Start background services/daemons first
+# exec echo -n > "$HOME/.config/sway/config.d/90-bar.conf" # Example from original config if needed
+exec waybar
+exec mako
+# exec swayidle ... # Uncomment and configure if you set up swayidle
 
-exec swaymsg "workspace $ws5; exec flatpak run org.zulip.Zulip"
-exec swaymsg "workspace $ws5; exec flatpak run com.slack.Slack"
+# Start your tmux session creation script (if it pre-creates sessions needed below)
+# Ensure this script completes before terminals try to attach if they depend on it.
+exec sh /opt/script/tmux/create-session.work.sh
 
-exec swaymsg "workspace $ws6; exec $term tmux a -t info:calcurse"
+# Start main applications
+exec flatpak run app.zen_browser.zen
+exec thunderbird
+exec firefox
+exec flatpak run org.zulip.Zulip
+exec flatpak run com.slack.Slack
+# exec xpad # Uncomment if you use and want xpad started
+exec bitwarden
 
-exec swaymsg "workspace $ws9; exec bitwarden"
+# Start Terminals with unique app_ids and robust tmux attach/create commands
+# The `--app-id` flag sets the ID for the 'assign' rule above.
+# `tmux new-session -A -s <session_name>` attaches if exists, creates if not.
+# exec $term --app-id=foot-main tmux a -t main:term
+# exec $term --app-id=foot-info tmux a -t info:calcurse
 
-include /etc/sway/config.d/
-#include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+
+### Includes
+# Include configs from standard locations. The last specified location takes precedence.
+# Check your system's preferred method (simple include or layered-include)
+
+# Option 1: Simple include (Common)
+include /etc/sway/config.d/*
+
+# Option 2: Layered include (Used by some distros like Fedora)
+# Ensure the path to the helper script is correct for your system.
+# include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "/etc/sway/config.d/*.conf" "${XDG_CONFIG_HOME:-$HOME/.config}/sway/config.d/*.conf")'
+
+# --- End of Configuration ---

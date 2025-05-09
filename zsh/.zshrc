@@ -103,7 +103,6 @@ set -o ignoreeof
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias tree="tree -I 'node_modules'"
-alias bat="batcat"
 alias vim="nvim"
 alias pn="pnpm"
 alias tssh="tsh ssh"
@@ -117,3 +116,19 @@ export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
+
+# pnpm
+export PNPM_HOME="/home/izzany/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# flutter
+export PUB_HOSTED_URL="https://pub.flutter-io.cn"
+export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
+export PATH="$PATH:/home/izzany/projects/flutter/bin"
+
+# Turso
+export PATH="$PATH:/home/izzany/.turso"
