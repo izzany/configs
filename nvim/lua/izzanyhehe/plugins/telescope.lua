@@ -8,7 +8,25 @@ return {
     },
 
     config = function()
-        require('telescope').setup({})
+        require('telescope').setup({
+            defaults = {
+                mappings = {
+                    i = {
+                        ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
+                        ['<C-a>'] = require('telescope.actions').toggle_all,
+                        ['<C-d>'] = require('telescope.actions').drop_all,
+                        -- ["<C-S-n>"] = require('telescope.actions').results_scrolling_left,
+                        -- ["<C-S-o>"] = require('telescope.actions').results_scrolling_right,
+                    },
+                },
+                layout_strategy = "horizontal",
+                layout_config = {
+                    horizontal = {
+                        preview_width = 0.6
+                    }
+                }
+            }
+        })
 
         local builtin = require('telescope.builtin')
         vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
@@ -27,4 +45,3 @@ return {
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
     end
 }
-

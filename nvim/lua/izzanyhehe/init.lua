@@ -18,6 +18,14 @@ vim.filetype.add({
     }
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'help', 'man', 'fugitive' },
+    callback = function()
+        vim.cmd('wincmd L')
+        vim.cmd('vertical resize 90')
+    end
+})
+
 autocmd('TextYankPost', {
     group = yank_group,
     pattern = '*',
