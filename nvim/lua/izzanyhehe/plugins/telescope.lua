@@ -14,9 +14,11 @@ return {
                     i = {
                         ['<C-p>'] = require('telescope.actions.layout').toggle_preview,
                         ['<C-a>'] = require('telescope.actions').toggle_all,
-                        ['<C-d>'] = require('telescope.actions').drop_all,
+                        ['<C-x>'] = require('telescope.actions').drop_all,
                         -- ["<C-S-n>"] = require('telescope.actions').results_scrolling_left,
                         -- ["<C-S-o>"] = require('telescope.actions').results_scrolling_right,
+                        ["<C-Up>"] = require("telescope.actions").cycle_history_prev,
+                        ["<C-Down>"] = require("telescope.actions").cycle_history_next,
                     },
                 },
                 layout_strategy = "horizontal",
@@ -40,7 +42,8 @@ return {
             builtin.grep_string({ search = word })
         end)
         vim.keymap.set('n', '<leader>ps', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
+            -- builtin.grep_string({ search = vim.fn.input("Grep > ") })
+            builtin.live_grep({})
         end)
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
     end

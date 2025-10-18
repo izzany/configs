@@ -19,12 +19,20 @@ vim.filetype.add({
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'help', 'man', 'fugitive' },
+    pattern = { 'help', 'man' },
     callback = function()
         vim.cmd('wincmd L')
         vim.cmd('vertical resize 90')
     end
 })
+
+-- vim.api.nvim_create_autocmd('FileType', {
+--     pattern = { 'fugitive' },
+--     callback = function()
+--         vim.cmd('wincmd H')
+--         vim.cmd('vertical resize 40')
+--     end
+-- })
 
 autocmd('TextYankPost', {
     group = yank_group,
@@ -70,6 +78,7 @@ autocmd('LspAttach', {
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
     end
 })
+
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
