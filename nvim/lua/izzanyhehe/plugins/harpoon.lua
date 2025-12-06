@@ -27,14 +27,14 @@ return {
             }):find()
         end
 
-        vim.keymap.set("n", "<leader>A", function() harpoon:list():prepend() end)
-        vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+        vim.keymap.set("n", "<leader>hA", function() harpoon:list():prepend() end)
+        vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end)
         vim.keymap.set("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
-        vim.keymap.set("n", "<leader>n", function() harpoon:list():select(1) end)
-        vim.keymap.set("n", "<leader>e", function() harpoon:list():select(2) end)
-        vim.keymap.set("n", "<leader>i", function() harpoon:list():select(3) end)
-        vim.keymap.set("n", "<leader>o", function() harpoon:list():select(4) end)
+        vim.keymap.set("n", "<leader>hn", function() harpoon:list():select(1) end)
+        vim.keymap.set("n", "<leader>he", function() harpoon:list():select(2) end)
+        vim.keymap.set("n", "<leader>hi", function() harpoon:list():select(3) end)
+        vim.keymap.set("n", "<leader>ho", function() harpoon:list():select(4) end)
         vim.keymap.set("n", "<leader><C-n>", function() harpoon:list():replace_at(1) end)
         vim.keymap.set("n", "<leader><C-e>", function() harpoon:list():replace_at(2) end)
         vim.keymap.set("n", "<leader><C-i>", function() harpoon:list():replace_at(3) end)

@@ -132,3 +132,6 @@ export PATH="$PATH:/home/izzany/projects/flutter/bin"
 
 # Turso
 export PATH="$PATH:/home/izzany/.turso"
+
+# fzf
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
