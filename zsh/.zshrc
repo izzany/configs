@@ -109,10 +109,11 @@ alias tssh="tsh ssh"
 alias ss="grim -g \"\$(slurp)\" - | wl-copy"
 # Custom exports
 #
-export GOPATH=$HOME/go
-export PATH="$PATH:$GOPATH/bin"
+export PATH="$PATH:/usr/local/go/bin"
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 . "/home/izzany/.deno/env"
+# Update PATH so protoc compiler can find plugins
+export PATH="$PATH:$(go env GOPATH)/bin"
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
@@ -135,3 +136,6 @@ export PATH="$PATH:/home/izzany/.turso"
 
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+# opencode
+export PATH=/home/izzany/.opencode/bin:$PATH
