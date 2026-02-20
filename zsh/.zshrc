@@ -126,6 +126,8 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# npm
+export PATH="$PATH:$(npm config get prefix)/bin"
 # flutter
 export PUB_HOSTED_URL="https://pub.flutter-io.cn"
 export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
