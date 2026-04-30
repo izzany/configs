@@ -9,13 +9,19 @@ return {
         local cwd = vim.uv.cwd()
         local basename = vim.fs.basename(cwd)
         _99.setup({
-            -- provider = _99.ClaudeCodeProvider,  -- default: OpenCodeProvider
-            model = "kimi-k2.5-free",
+            -- provider = _99.Providers.ClaudeCodeProvider,  -- default: OpenCodeProvider
+            model = "openai/gpt-5.3-codex",
             logger = {
                 level = _99.DEBUG,
                 path = "/tmp/" .. basename .. ".99.debug",
                 print_on_error = true,
             },
+            -- When setting this to something that is not inside the CWD tools
+            -- such as claude code or opencode will have permission issues
+            -- and generation will fail refer to tool documentation to resolve
+            -- https://opencode.ai/docs/permissions/#external-directories
+            -- https://code.claude.com/docs/en/permissions#read-and-edit
+            tmp_dir = "./tmp",
 
             --- Completions: #rules and @files in the prompt buffer
             completion = {
@@ -49,8 +55,7 @@ return {
                     -- exclude = { ".env", ".env.*", "node_modules", ".git", ... },
                 },
 
-                --- What autocomplete do you use.  We currently only
-                --- support cmp right now
+                --- What autocomplete you use.
                 source = "cmp",
             },
 
@@ -75,13 +80,17 @@ return {
         --
         -- likely ill add a mode check and assert on required visual mode
         -- so just prepare for it now
-        vim.keymap.set("v", "<leader>vv", function()
+        vim.keymap.set("v", "<leader>nv", function()
             _99.visual()
         end)
 
         --- if you have a request you dont want to make any changes, just cancel it
-        vim.keymap.set("v", "<leader>vs", function()
+        vim.keymap.set("n", "<leader>nx", function()
             _99.stop_all_requests()
+        end)
+
+        vim.keymap.set("n", "<leader>ns", function()
+            _99.search()
         end)
     end,
 }

@@ -15,7 +15,7 @@ set $up i
 set $right o
 # Your preferred terminal emulator
 # Recommends: foot
-set $term foot
+set $term ghostty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -285,8 +285,9 @@ assign [app_id="com.slack.Slack"] $ws5
 assign [class="Bitwarden"] $ws9
 
 # Assign specific terminal instances using unique app_ids (set via --app-id flag)
-assign [app_id="foot-main"] $ws4
-assign [app_id="foot-info"] $ws6
+assign [app_id="term-main"] $ws4
+assign [app_id="term-agent"] $ws4
+assign [app_id="term-info"] $ws6
 
 
 ### Startup Applications

@@ -141,3 +141,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
 # opencode
 export PATH=/home/izzany/.opencode/bin:$PATH
+
+# xcomposer
+export GTK_IM_MODULE="xim"
+export QT_IM_MODULE="xim"

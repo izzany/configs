@@ -3,5 +3,5 @@ return {
     lazy = false,
     preview = {
         icon_provider = "mini", -- "mini" or "devicons"
-    }
+    },
 };
